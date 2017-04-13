@@ -1,1 +1,61 @@
 aws emr create-cluster --release-label emr-5.2.0 --name 'JupyterSpark'  --applications Name=Hadoop Name=Hive Name=Spark Name=Pig Name=Tez Name=Ganglia Name=Presto   --ec2-attributes KeyName=sparklyr_office,InstanceProfile=EMR_EC2_DefaultRole   --service-role EMR_DefaultRole   --instance-groups  InstanceGroupType=MASTER,InstanceCount=1,InstanceType=c3.4xlarge  InstanceGroupType=CORE,InstanceCount=2,InstanceType=c3.4xlarge  --region us-east-1  --log-uri s3://aws-logs-161653025481-us-east-1/emr-logs/  --bootstrap-actions Name='InstallJupyternotebook',Path="s3://aws-bigdata-blog/artifacts/aws-blog-emr-jupyter/install-jupyter-emr5.sh",Args=[--r,--julia,--toree,--torch,--ruby,--ds-packages,--ml-packages,--python-packages,--port,8880,--password,jupyter,--jupyterhub,--jupyterhub-port,8001,--cached-install,--notebook-dir,s3://aws-logs-161653025481-us-east-1/notebooks/,--copy-samples]
+
+
+
+git clone
+git config --get remote.origin.url
+git config --user.email
+git config --user.name
+git add
+git commit
+git push 
+
+
+
+
+# Make download directory
+mkdir /tmp/flights
+
+# Download flight data by year
+for i in {1987..2008}
+  do
+    echo "$(date) $i Download"
+    fnam=$i.csv.bz2
+    wget -O /tmp/flights/$fnam http://stat-computing.org/dataexpo/2009/$fnam
+    echo "$(date) $i Unzip"
+    bunzip2 /tmp/flights/$fnam
+  done
+
+# Download airline carrier data
+wget -O /tmp/airlines.csv http://www.transtats.bts.gov/Download_Lookup.asp?Lookup=L_UNIQUE_CARRIERS
+
+# Download airports data
+wget -O /tmp/airports.csv https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat
+
+
+
+
+
+(for %F in (2001.csv 2002.csv 2003.csv 2004.csv 2005.csv 2006.csv 2007.csv 2008.csv) do @more +1 "%F") > test20012008.csv
+
+copy 2000.csv + test20012008.csv Airflight.csv
+
+
+
+
+cd\
+cd windows\system32\
+cd..
+P:
+
+
+
+df = sqlContext.read.format('com.databricks.spark.csv').option("header", 'true').load("C:/Users/zihao.zhang/Parallel-Computing/2000-2004.csv")
+
+
+
+df = sc.textFile("C:/Users/zihao.zhang/Parallel-Computing/2000-2004.csv") \
+    .map(lambda line: line.split(",")) \
+    .filter(lambda line: len(line)>1) \
+    .map(lambda line: (line[0],line[1])) \
+    .collect()
