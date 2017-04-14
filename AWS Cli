@@ -53,9 +53,4 @@ P:
 df = sqlContext.read.format('com.databricks.spark.csv').option("header", 'true').load("C:/Users/zihao.zhang/Parallel-Computing/2000-2004.csv")
 
 
-
-df = sc.textFile("C:/Users/zihao.zhang/Parallel-Computing/2000-2004.csv") \
-    .map(lambda line: line.split(",")) \
-    .filter(lambda line: len(line)>1) \
-    .map(lambda line: (line[0],line[1])) \
-    .collect()
+aws s3 cp myfolder s3://mybucket/myfolder --recursive
